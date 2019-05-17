@@ -14,6 +14,8 @@ const uuidv4 = require('uuid/v4')
 // Schema
 const typeDefs = gql`
     type Query {
+        greeting(name: String): String!
+        add(numbers: [Float!]!): Float!
         me: User!
         products: [Product!]!
     }
@@ -47,6 +49,30 @@ const typeDefs = gql`
 // Resolvers
 const resolvers = {
     Query: {
+        // Udemy course follow along
+        greeting: (parent, args, context, info) => {
+            const greeting = args.name 
+                ? `Hello ${args.name}, welcome back!` 
+                : `Welcome to our site!`
+            return greeting
+        },
+        add: (parent, args, context, info) => {
+            // let total = 0
+
+            // args.numbers.map(num => {
+            //     total += num
+            // })
+
+            let total = args.numbers.length 
+                ? args.numbers.reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue
+                })
+                : 0
+
+            return total
+        },
+
+        // Messing around with some deeper aspects
         me: () => {
             return {
                 id: () => {
