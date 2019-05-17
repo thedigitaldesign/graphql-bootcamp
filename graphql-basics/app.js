@@ -29,8 +29,18 @@ const typeDefs = gql`
         title: String!
         price: Float!
         releaseYear: Int
-        rating: Float
         inStock: Boolean!
+        quantity: Int!
+        reviews: [Review]
+    }
+
+    type Review {
+        id: ID!
+        ProductId: ID!
+        title: String!
+        comment: String
+        date: String!
+        rating: Float!
     }
 `
 
@@ -65,11 +75,14 @@ const resolvers = {
                     releaseYear: () => {
                         return 1999
                     },
-                    rating: () => {
-                        return 4
-                    },
                     inStock: () => {
                         return false
+                    },
+                    quantity: () => {
+                        return 0
+                    },
+                    reviews: () => {
+
                     }
                 },
                 {
@@ -85,11 +98,23 @@ const resolvers = {
                     releaseYear: () => {
                         return 2019
                     },
-                    rating: () => {
-                        return 5
-                    },
                     inStock: () => {
                         return true
+                    },
+                    quantity: () => {
+                        return 6
+                    },
+                    reviews: () => {
+                        return [
+                            {
+                               id: uuidv4(),
+                               ProductId: uuidv4(),
+                               title: 'Best Book EVER!',
+                               comment: 'See title obviously!',
+                               date: new Date(),
+                               rating: 4
+                            }
+                        ]
                     }
                 }
             ]
